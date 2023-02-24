@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define N 100
+void shellsort(int arry[], int number)
+{
+	int j, i, step;
+	int temp;
+	for (step = number / 2; step > 0; step/=2)
+	{
+		for (j = step; j < number; j++)
+		{
+			temp = arry[j];
+			i = 0;
+			for (i = j; i >= step && arry[i - step] > temp; i = i - step)
+			{
+				arry[i] = arry[i - step];
+			}
+			arry[i] = temp;
+		}
+	}
+}
+int main()
+{
+	int number;
+	int arry[N];
+	srand(time(NULL));
+	printf("input the number of the arry\n");
+	scanf("%d", &number);
+	int i;
+	printf("output the random\n");
+	for (i = 0; i < number; i++)
+	{
+		arry[i] = rand() % (number + 1);
+		printf("%d ", arry[i]);
+	}
+	printf("\n");
+	printf("after sorting\n");
+	shellsort(arry, number);
+	for (i = 0; i < number; i++)
+	{
+		printf("%d ", arry[i]);
+	}
+	return 0;
+}
