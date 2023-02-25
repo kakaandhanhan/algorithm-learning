@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define N 10
+
+
+void mergesort(int arry[], int number);
+void mergesort_divided(int arry[], int left, int right);
+void mergesort_sorted(int arry[], int left, int right, int mid);
+
+int main()
+{
+	int arry[N];
+	int number;
+	printf("input the number of the arry\n");
+	scanf("%d", &number);
+	srand(time(NULL));
+	int i;
+	printf("the raw list is:\n");
+	
+	for (i = 0; i < number; i++)
+	{
+		arry[i] = rand() % (number + 1);
+		printf("%d ", arry[i]);
+	}
+	printf("\n");
+	mergesort(arry, number);
+	printf("exchange:\n");
+	for (i = 0; i < number; i++)
+	{
+		printf("%d ", arry[i]);
+	}
+	printf("\n");
+	return 0;
+}
+void mergesort(int arry[], int number)
+{
+	mergesort_divided(arry, 0, number-1 );
+}
+
+void mergesort_divided(int arry[], int left, int right)
+{
+	if (left < right)
+	{
+		int mid = left + (right - 1) / 2;
+		mergesort_divided(arry, left, mid);
+		mergesort_divided(arry, mid + 1, right);
+		mergesort_sorted(arry, left, right, mid);
+	}
+	
+}
+
+void mergesort_sorted(int arry[], int left, int right, int mid)
+{
+
+	int temp_left[N];
+	int temp_right[N];
+	int left_length = mid - left + 1;
+	int right_length = right - (mid + 1) + 1;
+	int i, j, k;
+	for (i = 0; i < left_length; i++)
+	{
+		temp_left[i] = arry[i + left];
+	}
+	for (i = 0; i < right_length; i++)
+	{
+		temp_right[i] = arry[mid + 1 + i];
+	}
+	for (i = 0, j = 0, k = left; k <= right; k++)
+	{
+		if (i < left_length && (j >= right_length || temp_left[i] <= temp_right[j]))
+		{
+			arry[k] = temp_left[i];
+			i++;
+		}
+		else
+		{
+			arry[k] = temp_right[j];
+			j++;
+		}
+	}
+}
